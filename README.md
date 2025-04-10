@@ -45,4 +45,4 @@
 
 2. Use pip to install pillow, pystray, and pyinstaller
 
-3. Run `pyinstaller --onefile --noconsole --add-data "frotoggle.exe;." frl-tray.py`
+3. Run `pyinstaller --onefile --noconsole frl-tray.py`
