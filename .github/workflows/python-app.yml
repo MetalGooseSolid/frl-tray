@@ -54,14 +54,15 @@ jobs:
       run: |
         Move-Item ${{ steps.download_release.outputs.exe_name }} .\frl-tray\
 
-    - name: Upload built executable
+    - name: Create release bundle
+      run: |
+        Compress-Archive -Path .\frl-tray\* -DestinationPath frl-tray.zip
+
+    - name: Upload release bundle
       uses: actions/upload-artifact@v4
       with:
-        name: frl-tray-build
-        path: |
-          frl-tray/frl-tray.exe
-          frl-tray/icons/**
-          frl-tray/${{ steps.download_release.outputs.exe_name }}
+        name: frl-tray
+        path: frl-tray.zip
 
     - name: Create GitHub release
       id: create_release
@@ -69,9 +70,6 @@ jobs:
       with:
         name: Release ${{ github.ref_name }}  # Use the branch name or tag name as the release name
         tag_name: ${{ github.ref_name }}     # Use the branch name or tag name as the tag
-        files: |
-          frl-tray/frl-tray.exe
-          frl-tray/icons/*
-          frl-tray/${{ steps.download_release.outputs.exe_name }}
+        files: frl-tray.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
