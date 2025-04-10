@@ -5,7 +5,7 @@
 
 - Easily see and select the current FRL
 - Minimal tray interface
-- Currently, FRL is checked when the app is started, and then only reflects changes made with the frl-tray utility
+- Currently, the FRL is checked once when the app is started, and then only reflects changes made from the frl-tray utility
 
 ## Prerequisites
 
