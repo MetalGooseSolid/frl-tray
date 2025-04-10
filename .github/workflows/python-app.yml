@@ -25,12 +25,15 @@ jobs:
 
     - name: Download latest frl-toggle release
       shell: pwsh
+      id: download_release
       run: |
         $repo = "FrogTheFrog/frl-toggle"
         $release = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases/latest"
         $asset = $release.assets | Where-Object { $_.name -match "\.exe$" }
         $downloadUrl = $asset.browser_download_url
-        Invoke-WebRequest -Uri $downloadUrl -OutFile "frl-toggle.exe"
+        $exeName = $asset.name
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $exeName
+        Write-Output "::set-output name=exe_name::$exeName"
 
     - name: Build with PyInstaller
       run: |
@@ -44,15 +47,15 @@ jobs:
       run: |
         Copy-Item -Recurse -Force .\icons .\frl-tray\icons
 
-    - name: Move frl-toggle.exe to frl-tray
+    - name: Move downloaded frl-toggle.exe to frl-tray
       run: |
-        Move-Item frl-toggle.exe .\frl-tray\frl-toggle.exe
+        Move-Item ${{ steps.download_release.outputs.exe_name }} .\frl-tray\
 
     - name: Upload built executable
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: frl-tray-build
         path: |
           frl-tray/frl-tray.exe
           frl-tray/icons/**
-          frl-tray/frl-toggle.exe
+          frl-tray/${{ steps.download_release.outputs.exe_name }}
