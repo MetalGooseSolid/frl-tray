@@ -19,11 +19,7 @@
 
 2. Extract the folder to any desired install directory
 
-3. Download the [frl-toggle executable](https://github.com/FrogTheFrog/frl-toggle/releases)
-
-4. Move the frl-toggle executable (eg. `frltoggle-1.2.0.x86_64.exe`) into the install directory (alongside `frl-tray.exe`)
-
-5. Run `frl-tray.exe`
+3. Run `frl-tray.exe`
 
 ## Enable Auto-Start on Login (quick)
 
