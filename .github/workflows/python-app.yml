@@ -33,7 +33,7 @@ jobs:
         $downloadUrl = $asset.browser_download_url
         $exeName = $asset.name
         Invoke-WebRequest -Uri $downloadUrl -OutFile $exeName
-        echo "exe_name=$exeName" >> $GITHUB_ENV  # Using environment file to set the output
+        Write-Output "::set-output name=exe_name::$exeName"
 
     - name: Build with PyInstaller
       run: |
@@ -49,7 +49,7 @@ jobs:
 
     - name: Move downloaded frl-toggle.exe to frl-tray
       run: |
-        Move-Item ${{ env.exe_name }} .\frl-tray\
+        Move-Item ${{ steps.download_release.outputs.exe_name }} .\frl-tray\
 
     - name: Upload built executable
       uses: actions/upload-artifact@v4
@@ -58,17 +58,17 @@ jobs:
         path: |
           frl-tray/frl-tray.exe
           frl-tray/icons/**
-          frl-tray/${{ env.exe_name }}
+          frl-tray/${{ steps.download_release.outputs.exe_name }}
 
     - name: Create GitHub release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.sha }}  # Tag based on the commit SHA
-        release_name: "Release ${{ github.sha }}"  # You can customize the release name if desired
+        name: Release ${{ github.sha }}  # Use the commit hash as the release name
+        tag_name: ${{ github.sha }}     # Use the commit hash as the tag
         files: |
           frl-tray/frl-tray.exe
-          frl-tray/icons/**
-          frl-tray/${{ env.exe_name }}
+          frl-tray/icons/*
+          frl-tray/${{ steps.download_release.outputs.exe_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
