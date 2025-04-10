@@ -11,7 +11,6 @@
 
 - Windows (tested on Windows 11 only)
 - Nvidia GPU with support for the Max Frame Rate setting
-- The latest release of [`frl-toggle`](https://github.com/FrogTheFrog/frl-toggle) (Note: tested only against v1.2.0)
 
 ## Quick Start
 
