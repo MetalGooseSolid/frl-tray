@@ -14,7 +14,7 @@
 
 ## Quick Start
 
-1. Download the latest (zip) release build of `frl-tray`
+1. Download the latest (zip) release of `frl-tray`
 
 2. Extract the folder to any desired install directory
 
