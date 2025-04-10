@@ -67,8 +67,8 @@ jobs:
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
-        name: Release ${{ github.sha }}  # Use the commit hash as the release name
-        tag_name: ${{ github.sha }}     # Use the commit hash as the tag
+        name: Release ${{ github.ref_name }}  # Use the branch name or tag name as the release name
+        tag_name: ${{ github.ref_name }}     # Use the branch name or tag name as the tag
         files: |
           frl-tray/frl-tray.exe
           frl-tray/icons/*
