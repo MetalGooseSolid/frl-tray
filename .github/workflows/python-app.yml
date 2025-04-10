@@ -35,10 +35,8 @@ jobs:
         $asset = $release.assets | Where-Object { $_.name -match "\.exe$" }
         $downloadUrl = $asset.browser_download_url
         $exeName = $asset.name
-        if (-not $env:GITHUB_ENV) {
-          $env:GITHUB_ENV = "$($env:RUNNER_TEMP)\github_env"
-        }
-        "$env:GITHUB_ENV" | Out-File -Append -Encoding utf8 -InputObject "exe_name=$exeName"
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $exeName
+        Write-Output "::set-output name=exe_name::$exeName"
 
     - name: Build with PyInstaller
       run: |
