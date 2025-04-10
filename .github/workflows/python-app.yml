@@ -59,3 +59,14 @@ jobs:
           frl-tray/frl-tray.exe
           frl-tray/icons/**
           frl-tray/${{ steps.download_release.outputs.exe_name }}
+
+    - name: Create GitHub release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          frl-tray/frl-tray.exe
+          frl-tray/icons/**
+          frl-tray/${{ steps.download_release.outputs.exe_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
